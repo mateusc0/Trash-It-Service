@@ -1,51 +1,55 @@
 package br.com.fiap.trashitservice.controller;
 
-import br.com.fiap.trashitservice.model.Coleta;
 import br.com.fiap.trashitservice.model.Endereco;
 import br.com.fiap.trashitservice.model.Lixeira;
-import br.com.fiap.trashitservice.model.repository.ColetaRepository;
+import br.com.fiap.trashitservice.model.Usuario;
 import br.com.fiap.trashitservice.model.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("coleta")
-public class ColetaController {
-    @Autowired
-    private ColetaRepository coletaRepository;
+@RequestMapping("endereco")
+public class EnderecoController {
+
     @Autowired
     private EnderecoRepository enderecoRepository;
-    @PostMapping("/{id_endereco}")
-    public ResponseEntity<Coleta> create(@PathVariable("id_endereco") long idEndereco, @RequestBody Coleta coleta){
-        if (coleta != null){
-            coletaRepository.save(coleta);
+    @PostMapping()
+    public ResponseEntity<Endereco> create(@RequestBody Endereco endereco){
+        if (endereco != null){
+            enderecoRepository.save(endereco);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping(path = "/{id_endereco}")
-    public ResponseEntity<List<Coleta>> findById(@PathVariable("id_endereco") long idEndereco){
-        Endereco endereco = enderecoRepository.findById(idEndereco).orElse(null);
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Endereco> findById(@PathVariable("id") long id){
+        Endereco endereco = enderecoRepository.findById(id).orElse(null);
         if (endereco != null){
-            List<Coleta> coletas = coletaRepository.findAllByEndereco(endereco).orElse(null);
-            if (coletas != null){
-                return ResponseEntity.ok(coletas);
-            }
+            return ResponseEntity.ok(endereco);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(path = "")
+    public ResponseEntity<Endereco> findByUsuario(@RequestBody Usuario usuario){
+        Endereco endereco = enderecoRepository.findByUsuariosEquals(Set.of(usuario)).orElse(null);
+        if (endereco != null){
+            return ResponseEntity.ok(endereco);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Coleta> update(@PathVariable("id") long id, @RequestBody Coleta coleta) {
-        Coleta coletaBanco = coletaRepository.findById(id).orElse(null);
-        if (coleta != null && coletaBanco != null){
-            Lixeira lixeiraBanco = coletaBanco.getLixeira();
-            Lixeira lixeira = coleta.getLixeira();
+    public ResponseEntity<Endereco> update(@PathVariable("id") long id, @RequestBody Endereco endereco) {
+        Endereco enderecoBanco = enderecoRepository.findById(id).orElse(null);
+        if (endereco != null && enderecoBanco != null){
+            Lixeira lixeiraBanco = enderecoBanco.getLixeira();
+            Lixeira lixeira = endereco.getLixeira();
 
             if (lixeiraBanco.isPrecisaColeta() != lixeira.isPrecisaColeta()){
                 lixeiraBanco.setPrecisaColeta(lixeira.isPrecisaColeta());
@@ -68,19 +72,18 @@ public class ColetaController {
             if (lixeiraBanco.getDtNotificacao() != lixeira.getDtNotificacao()){
                 lixeiraBanco.setDtNotificacao(lixeira.getDtNotificacao());
             }
-            coletaRepository.save(coletaBanco);
-            return ResponseEntity.ok(coletaBanco);
+            enderecoRepository.save(enderecoBanco);
+            return ResponseEntity.ok(enderecoBanco);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Coleta> delete(@PathVariable("id") long id){
-        Coleta coleta  = coletaRepository.findById(id).orElse(null);
-        if (coleta != null){
-            coletaRepository.delete(coleta);
+    public ResponseEntity<Endereco> delete(@PathVariable("id") long id){
+        Endereco endereco  = enderecoRepository.findById(id).orElse(null);
+        if (endereco != null){
+            enderecoRepository.delete(endereco);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status((HttpStatus.BAD_REQUEST)).build();
-
     }
 }
