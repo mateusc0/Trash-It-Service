@@ -1,12 +1,16 @@
 package br.com.fiap.trashitservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "tbl_usuario")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_sequence")
@@ -17,7 +21,6 @@ public class Usuario {
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "id_endereco", nullable = true)
-    @JsonBackReference
     private Endereco endereco;
     private String cpf;
     private String email;

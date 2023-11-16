@@ -1,12 +1,15 @@
 package br.com.fiap.trashitservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "tbl_endereco")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_sequence")
@@ -22,10 +25,8 @@ public class Endereco {
     @Embedded
     private Lixeira lixeira;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private Set<Coleta> coletas;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private Set<Usuario> usuarios;
 
     public Endereco() {

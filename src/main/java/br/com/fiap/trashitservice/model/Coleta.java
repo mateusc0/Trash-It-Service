@@ -1,6 +1,8 @@
 package br.com.fiap.trashitservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tbl_coleta")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Coleta {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coleta_sequence")
