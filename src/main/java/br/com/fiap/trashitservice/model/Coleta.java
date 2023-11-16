@@ -2,6 +2,7 @@ package br.com.fiap.trashitservice.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,7 @@ public class Coleta {
     @JoinColumn(name = "id_endereco_dono", nullable = false)
     private Endereco endereco;
     @Column(name = "dt_coleta")
-    private Date dtColeta;
+    private LocalDateTime dtColeta;
     @Embedded
     private Lixeira lixeira;
 
@@ -35,11 +36,11 @@ public class Coleta {
         this.endereco = endereco;
     }
 
-    public Date getDtColeta() {
+    public LocalDateTime getDtColeta() {
         return dtColeta;
     }
 
-    public void setDtColeta(Date dtColeta) {
+    public void setDtColeta(LocalDateTime dtColeta) {
         this.dtColeta = dtColeta;
     }
 

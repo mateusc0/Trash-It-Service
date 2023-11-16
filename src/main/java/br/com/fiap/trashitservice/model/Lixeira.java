@@ -3,7 +3,7 @@ package br.com.fiap.trashitservice.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Embeddable
 public class Lixeira {
@@ -20,7 +20,20 @@ public class Lixeira {
     @Column(name = "coleta_organico")
     private boolean temOrganico;
     @Column(name = "dt_notificacao")
-    private Date dtNotificacao;
+    private LocalDateTime dtNotificacao;
+
+    public Lixeira() {
+    }
+
+    public Lixeira(boolean precisaColeta, boolean temPlastico, boolean temPapel, boolean temVidro, boolean temMetal, boolean temOrganico, LocalDateTime dtNotificacao) {
+        this.precisaColeta = precisaColeta;
+        this.temPlastico = temPlastico;
+        this.temPapel = temPapel;
+        this.temVidro = temVidro;
+        this.temMetal = temMetal;
+        this.temOrganico = temOrganico;
+        this.dtNotificacao = dtNotificacao;
+    }
 
     public boolean isPrecisaColeta() {
         return precisaColeta;
@@ -70,11 +83,11 @@ public class Lixeira {
         this.temOrganico = temOrganico;
     }
 
-    public Date getDtNotificacao() {
+    public LocalDateTime getDtNotificacao() {
         return dtNotificacao;
     }
 
-    public void setDtNotificacao(Date dtNotificacao) {
+    public void setDtNotificacao(LocalDateTime dtNotificacao) {
         this.dtNotificacao = dtNotificacao;
     }
 

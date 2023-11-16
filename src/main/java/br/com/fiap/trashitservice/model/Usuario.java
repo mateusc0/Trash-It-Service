@@ -1,6 +1,8 @@
 package br.com.fiap.trashitservice.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "tbl_usuario")
@@ -9,13 +11,26 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_sequence")
     @SequenceGenerator(name = "usuario_sequence", sequenceName = "usr_seq")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_endereco", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "id_endereco", nullable = true)
     private Endereco endereco;
     private String cpf;
     private String email;
     private String celular;
     private String senha;
+
+    public Usuario(Long id, Endereco endereco, String cpf, String email, String celular, String senha) {
+        this.id = id;
+        this.endereco = endereco;
+        this.cpf = cpf;
+        this.email = email;
+        this.celular = celular;
+        this.senha = senha;
+    }
+
+    public Usuario() {
+    }
 
     public Long getId() {
         return id;

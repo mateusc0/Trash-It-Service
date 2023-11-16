@@ -25,6 +25,23 @@ public class Endereco {
     @OneToMany
     private Set<Usuario> usuarios;
 
+    public Endereco() {
+    }
+
+    public Endereco(Long id, String cep, String numero, String rua, String complemento, String bairro, String cidade, String uf, Lixeira lixeira, Set<Coleta> coletas, Set<Usuario> usuarios) {
+        this.id = id;
+        this.cep = cep;
+        this.numero = numero;
+        this.rua = rua;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.lixeira = lixeira;
+        this.coletas = coletas;
+        this.usuarios = usuarios;
+    }
+
     public Long getId() {
         return id;
     }
