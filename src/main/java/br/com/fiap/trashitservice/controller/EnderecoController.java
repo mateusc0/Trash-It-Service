@@ -2,14 +2,12 @@ package br.com.fiap.trashitservice.controller;
 
 import br.com.fiap.trashitservice.model.Endereco;
 import br.com.fiap.trashitservice.model.Lixeira;
-import br.com.fiap.trashitservice.model.Usuario;
 import br.com.fiap.trashitservice.model.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
 
 @RestController
 @RequestMapping("endereco")
@@ -35,14 +33,14 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(path = "")
+/*    @GetMapping()
     public ResponseEntity<Endereco> findByUsuario(@RequestBody Usuario usuario){
         Endereco endereco = enderecoRepository.findByUsuariosEquals(Set.of(usuario)).orElse(null);
         if (endereco != null){
             return ResponseEntity.ok(endereco);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+    }*/
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Endereco> update(@PathVariable("id") long id, @RequestBody Endereco endereco) {

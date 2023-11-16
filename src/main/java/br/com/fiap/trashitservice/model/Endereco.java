@@ -1,5 +1,6 @@
 package br.com.fiap.trashitservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -20,9 +21,11 @@ public class Endereco {
     private String uf;
     @Embedded
     private Lixeira lixeira;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Coleta> coletas;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Usuario> usuarios;
 
     public Endereco() {

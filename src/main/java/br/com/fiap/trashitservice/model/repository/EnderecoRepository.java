@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
-    Optional<Endereco> findByUsuariosEquals(Set<Usuario> usuarios);
+    //Optional<Endereco> findByUsuariosEquals(Set<Usuario> usuarios);
 }

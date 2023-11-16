@@ -1,5 +1,6 @@
 package br.com.fiap.trashitservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,8 +13,9 @@ public class Coleta {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coleta_sequence")
     @SequenceGenerator(name = "coleta_sequence", sequenceName = "col_seq")
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_endereco_dono", nullable = false)
+    @JsonBackReference
     private Endereco endereco;
     @Column(name = "dt_coleta")
     private LocalDateTime dtColeta;

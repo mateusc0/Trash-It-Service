@@ -23,9 +23,13 @@ public class UsuarioController {
     @PostMapping("cadastro")
     public ResponseEntity<Usuario> create(){
         Lixeira lixeira = new Lixeira(false,false,false,false,false,false,null);
-        Endereco endereco = new Endereco(1L,"000-000","111","rua","complemento","bairro","cidade","uf",lixeira, null, Set.of());
+        Endereco endereco = new Endereco(1L,"09211111","111","Rua Exemplo","","Bairro Exemplo","cidade","SP", lixeira, Set.of(), Set.of());
         enderecoRepository.save(endereco);
-        Usuario usuario = new Usuario(1L,endereco,"0000000-000","email","119888888","senha");
+        Usuario usuario = new Usuario(1L,"Seu Nome",null,"00000000000","seuEmail@email.com","11900000000","senha");
+        usuarioRepository.save(usuario);
+        endereco.setUsuarios(Set.of(usuario));
+        enderecoRepository.save(endereco);
+        usuario.setEndereco(endereco);
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(usuarioRepository.findById(1L).orElse(null));
     }
