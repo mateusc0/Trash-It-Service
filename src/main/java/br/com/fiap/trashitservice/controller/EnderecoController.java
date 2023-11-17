@@ -48,7 +48,6 @@ public class EnderecoController {
         if (endereco != null && enderecoBanco != null){
             Lixeira lixeiraBanco = enderecoBanco.getLixeira();
             Lixeira lixeira = endereco.getLixeira();
-
             if (lixeiraBanco.isPrecisaColeta() != lixeira.isPrecisaColeta()){
                 lixeiraBanco.setPrecisaColeta(lixeira.isPrecisaColeta());
             }

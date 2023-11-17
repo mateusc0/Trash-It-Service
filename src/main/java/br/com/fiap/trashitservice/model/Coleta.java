@@ -13,12 +13,11 @@ import java.util.Date;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Coleta {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coleta_sequence")
-    @SequenceGenerator(name = "coleta_sequence", sequenceName = "col_seq")
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coleta_sequence")
+    //@SequenceGenerator(name = "coleta_sequence", sequenceName = "col_seq")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_endereco_dono", nullable = false)
-    @JsonBackReference
     private Endereco endereco;
     @Column(name = "dt_coleta")
     private LocalDateTime dtColeta;

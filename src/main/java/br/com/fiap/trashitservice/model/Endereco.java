@@ -12,8 +12,8 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Endereco {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_sequence")
-    @SequenceGenerator(name = "endereco_sequence", sequenceName = "end_seq")
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_sequence")
+    //@SequenceGenerator(name = "endereco_sequence", sequenceName = "end_seq")
     private Long id;
     private String cep;
     private String numero;

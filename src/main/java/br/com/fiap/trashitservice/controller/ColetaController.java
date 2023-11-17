@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("coleta")
@@ -21,8 +22,15 @@ public class ColetaController {
     private EnderecoRepository enderecoRepository;
     @PostMapping("/{id_endereco}")
     public ResponseEntity<Coleta> create(@PathVariable("id_endereco") long idEndereco, @RequestBody Coleta coleta){
-        if (coleta != null){
+        Endereco endereco = enderecoRepository.findById(idEndereco).orElse(null);
+        if (coleta != null && endereco != null){
+            coleta.setEndereco(endereco);
             coletaRepository.save(coleta);
+            Set<Coleta> coletas = endereco.getColetas();
+            coletas.add(coleta);
+            endereco.setColetas(coletas);
+            enderecoRepository.save(endereco);
+
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -75,9 +83,14 @@ public class ColetaController {
     }
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Coleta> delete(@PathVariable("id") long id){
-        Coleta coleta  = coletaRepository.findById(id).orElse(null);
-        if (coleta != null){
-            coletaRepository.delete(coleta);
+        Coleta coletaBanco  = coletaRepository.findById(id).orElse(null);
+        if (coletaBanco != null){
+            Endereco endereco = coletaBanco.getEndereco();
+            Set<Coleta> coletas = endereco.getColetas();
+            coletas.remove(coletaBanco);
+            endereco.setColetas(coletas);
+            enderecoRepository.save(endereco);
+            coletaRepository.delete(coletaBanco);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status((HttpStatus.BAD_REQUEST)).build();

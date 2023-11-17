@@ -23,7 +23,7 @@ public class UsuarioController {
     @PostMapping("cadastro")
     public ResponseEntity<Usuario> create(){
         Lixeira lixeira = new Lixeira(false,false,false,false,false,false,null);
-        Endereco endereco = new Endereco(1L,"09211111","111","Rua Exemplo","","Bairro Exemplo","cidade","SP", lixeira, Set.of(), Set.of());
+        Endereco endereco = new Endereco(1L,"09211111","111","Rua Exemplo","","Bairro Exemplo","São Paulo","SP", lixeira, Set.of(), Set.of());
         enderecoRepository.save(endereco);
         Usuario usuario = new Usuario(1L,"Seu Nome",null,"00000000000","seuEmail@email.com","11900000000","senha");
         usuarioRepository.save(usuario);
@@ -73,6 +73,11 @@ public class UsuarioController {
     public ResponseEntity<Usuario> delete(@PathVariable("id") long id){
         Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
         if (usuarioBanco != null){
+            Endereco endereco = usuarioBanco.getEndereco();
+            Set<Usuario> usuarios = endereco.getUsuarios();
+            usuarios.remove(usuarioBanco);
+            endereco.setUsuarios(usuarios);
+            enderecoRepository.save(endereco);
             usuarioRepository.delete(usuarioBanco);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
