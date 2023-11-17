@@ -2,7 +2,9 @@ package br.com.fiap.trashitservice.controller;
 
 import br.com.fiap.trashitservice.model.Endereco;
 import br.com.fiap.trashitservice.model.Lixeira;
+import br.com.fiap.trashitservice.model.Usuario;
 import br.com.fiap.trashitservice.model.repository.EnderecoRepository;
+import br.com.fiap.trashitservice.model.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ public class EnderecoController {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
     @PostMapping()
     public ResponseEntity<Endereco> create(@RequestBody Endereco endereco){
         if (endereco != null){
@@ -29,6 +33,18 @@ public class EnderecoController {
         Endereco endereco = enderecoRepository.findById(id).orElse(null);
         if (endereco != null){
             return ResponseEntity.ok(endereco);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(path = "/list/{id_usuario}")
+    public ResponseEntity<Endereco> findByUsuario(@PathVariable("id_usuario") long idUsuario){
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario != null){
+            Endereco endereco = enderecoRepository.getAllByUsuarios(usuario).orElse(null);
+            if (endereco != null){
+                return ResponseEntity.ok(endereco);
+            }
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

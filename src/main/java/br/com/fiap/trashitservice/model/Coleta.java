@@ -2,6 +2,7 @@ package br.com.fiap.trashitservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tbl_coleta")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Coleta {
     @Id
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coleta_sequence")
@@ -18,6 +19,7 @@ public class Coleta {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_endereco_dono", nullable = false)
+    @JsonBackReference
     private Endereco endereco;
     @Column(name = "dt_coleta")
     private LocalDateTime dtColeta;

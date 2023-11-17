@@ -21,6 +21,7 @@ public class Usuario {
     @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "id_endereco", nullable = true)
+    @JsonBackReference
     private Endereco endereco;
     private String cpf;
     private String email;

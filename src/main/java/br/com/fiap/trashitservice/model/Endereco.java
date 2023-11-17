@@ -25,8 +25,10 @@ public class Endereco {
     @Embedded
     private Lixeira lixeira;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Coleta> coletas;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Usuario> usuarios;
 
     public Endereco() {

@@ -40,7 +40,7 @@ public class ColetaController {
     public ResponseEntity<List<Coleta>> findById(@PathVariable("id_endereco") long idEndereco){
         Endereco endereco = enderecoRepository.findById(idEndereco).orElse(null);
         if (endereco != null){
-            List<Coleta> coletas = coletaRepository.findAllByEndereco(endereco).orElse(null);
+            List<Coleta> coletas = coletaRepository.getAllByEndereco(endereco).orElse(null);
             if (coletas != null){
                 return ResponseEntity.ok(coletas);
             }
