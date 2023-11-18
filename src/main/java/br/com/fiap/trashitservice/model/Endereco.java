@@ -10,10 +10,10 @@ import java.util.Set;
 @Entity
 @Table(name = "tbl_endereco")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "endereco", sequenceName = "SQ_ENDERECO")
 public class Endereco {
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_sequence")
-    //@SequenceGenerator(name = "endereco_sequence", sequenceName = "end_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco")
     private Long id;
     private String cep;
     private String numero;

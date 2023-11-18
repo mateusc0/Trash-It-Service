@@ -11,10 +11,10 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "tbl_usuario")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "usuario", sequenceName = "SQ_USUARIO")
 public class Usuario {
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_sequence")
-    //@SequenceGenerator(name = "usuario_sequence", sequenceName = "usr_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario")
     private Long id;
     @Column(name = "nome_completo")
     private String nomeCompleto;
