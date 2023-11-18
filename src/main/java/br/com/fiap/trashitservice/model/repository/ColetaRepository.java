@@ -11,5 +11,5 @@ import java.util.Optional;
 
 public interface ColetaRepository extends JpaRepository <Coleta, Long> {
 
-    Optional<List<Coleta>> getAllByEndereco(@Param("endereco") Endereco endereco);
+    Optional<List<Coleta>> findAllByEnderecoOrderByIdDesc(@Param("endereco") Endereco endereco);
 }
