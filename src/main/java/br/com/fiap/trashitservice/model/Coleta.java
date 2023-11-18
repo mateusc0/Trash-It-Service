@@ -1,9 +1,6 @@
 package br.com.fiap.trashitservice.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -22,9 +19,19 @@ public class Coleta {
     @JsonBackReference
     private Endereco endereco;
     @Column(name = "dt_coleta")
-    private LocalDateTime dtColeta;
+    private String dtColeta;
     @Embedded
     private Lixeira lixeira;
+
+    public Coleta() {
+    }
+
+    public Coleta(Long id, Endereco endereco, String dtColeta, Lixeira lixeira) {
+        this.id = id;
+        this.endereco = endereco;
+        this.dtColeta = dtColeta;
+        this.lixeira = lixeira;
+    }
 
     public Long getId() {
         return id;
@@ -42,11 +49,11 @@ public class Coleta {
         this.endereco = endereco;
     }
 
-    public LocalDateTime getDtColeta() {
+    public String getDtColeta() {
         return dtColeta;
     }
 
-    public void setDtColeta(LocalDateTime dtColeta) {
+    public void setDtColeta(String dtColeta) {
         this.dtColeta = dtColeta;
     }
 

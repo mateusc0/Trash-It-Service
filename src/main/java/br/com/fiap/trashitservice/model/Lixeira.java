@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Embeddable
 public class Lixeira {
@@ -20,12 +21,12 @@ public class Lixeira {
     @Column(name = "coleta_organico")
     private boolean temOrganico;
     @Column(name = "dt_notificacao")
-    private LocalDateTime dtNotificacao;
+    private String dtNotificacao;
 
     public Lixeira() {
     }
 
-    public Lixeira(boolean precisaColeta, boolean temPlastico, boolean temPapel, boolean temVidro, boolean temMetal, boolean temOrganico, LocalDateTime dtNotificacao) {
+    public Lixeira(boolean precisaColeta, boolean temPlastico, boolean temPapel, boolean temVidro, boolean temMetal, boolean temOrganico, String dtNotificacao) {
         this.precisaColeta = precisaColeta;
         this.temPlastico = temPlastico;
         this.temPapel = temPapel;
@@ -83,11 +84,11 @@ public class Lixeira {
         this.temOrganico = temOrganico;
     }
 
-    public LocalDateTime getDtNotificacao() {
+    public String getDtNotificacao() {
         return dtNotificacao;
     }
 
-    public void setDtNotificacao(LocalDateTime dtNotificacao) {
+    public void setDtNotificacao(String dtNotificacao) {
         this.dtNotificacao = dtNotificacao;
     }
 
